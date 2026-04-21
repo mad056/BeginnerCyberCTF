@@ -1,0 +1,23 @@
+name: "Follow the Trail"
+category: "OSINT"
+description: |
+  You found a QR code taped to a bulletin board outside the IT department.
+  Scan it — it leads to a company's website.
+
+  Someone at this company accidentally left sensitive info publicly accessible.
+  Investigate the site, follow the clues, and find the flag.
+
+  Download the QR code below and scan it with your phone or an online QR reader.
+  Once you reach the site, explore it — the flag is hidden somewhere in the trail.
+value: 150
+type: standard
+state: visible
+flags:
+  - flag{osint_starts_with_curiosity}
+hints:
+  - content: "The homepage mentions their team. Can you find the staff directory?"
+    cost: 0
+  - content: "One employee's profile links to their resume. Download it and read carefully."
+    cost: 50
+files:
+  - assets/qr.png

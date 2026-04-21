@@ -1,0 +1,18 @@
+name: "Suspicious Mail"
+category: "Awareness"
+description: |
+  Your company's IT team flagged this suspicious email. Something about it isn't right.
+
+  Download it and investigate — the flag is buried somewhere in the message.
+value: 125
+type: standard
+state: visible
+flags:
+  - flag{check_email_headers_always}
+hints:
+  - content: "Email messages contain far more than the visible body and subject. Try opening the raw/full source of the message."
+    cost: 30
+  - content: "Look for non-standard headers — they often start with X-. The flag is the value of one of them."
+    cost: 30
+files:
+  - assets/suspicious.eml

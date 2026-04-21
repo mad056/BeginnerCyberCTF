@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Scoreboard</h2>
+
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <canvas id="scoreChart" height="100"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <canvas id="challengeChart" height="120"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <h5>First Bloods 🩸</h5>
+          <table class="table table-dark table-sm mt-2" id="firstBloodTable">
+            <thead><tr><th>Challenge</th><th>Team</th><th>Time</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- fallback default scoreboard table -->
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-dark table-striped" id="standingsTable">
+        <thead><tr><th>#</th><th>Team</th><th>Score</th></tr></thead>
+        <tbody id="standingsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script>
+const COLORS = ['#3b82f6','#ef4444','#22c55e','#f59e0b','#a855f7','#06b6d4','#ec4899','#f97316'];
+
+async function loadScoreboard() {
+  // ── cumulative score chart ─────────────────────────────
+  const hist = await fetch('/api/v1/classroom/leaderboard-history').then(r => r.json());
+
+  const datasets = hist.map((team, i) => ({
+    label: team.team_name,
+    data: team.scores.map(s => ({ x: new Date(s.timestamp), y: s.cumulative })),
+    borderColor: COLORS[i % COLORS.length],
+    backgroundColor: COLORS[i % COLORS.length] + '33',
+    tension: 0.3,
+    fill: false,
+  }));
+
+  new Chart(document.getElementById('scoreChart'), {
+    type: 'line',
+    data: { datasets },
+    options: {
+      responsive: true,
+      plugins: { title: { display: true, text: 'Team Scores Over Time', color: '#e2e8f0' } },
+      scales: {
+        x: { type: 'time', time: { unit: 'minute' }, ticks: { color: '#94a3b8' } },
+        y: { beginAtZero: true, ticks: { color: '#94a3b8' } },
+      },
+    },
+  });
+
+  // ── standings table ────────────────────────────────────
+  const standings = hist
+    .map(t => ({ name: t.team_name, score: t.scores.length ? t.scores[t.scores.length - 1].cumulative : 0 }))
+    .sort((a, b) => b.score - a.score);
+
+  const tbody = document.getElementById('standingsBody');
+  standings.forEach((t, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${i + 1}</td><td>${t.name}</td><td>${t.score}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  // ── challenge stats ────────────────────────────────────
+  const stats = await fetch('/api/v1/classroom/challenge-stats').then(r => r.json());
+
+  new Chart(document.getElementById('challengeChart'), {
+    type: 'bar',
+    data: {
+      labels: stats.map(c => c.name),
+      datasets: [{ label: 'Solves', data: stats.map(c => c.solves), backgroundColor: '#3b82f6' }],
+    },
+    options: {
+      responsive: true,
+      plugins: { title: { display: true, text: 'Solves per Challenge', color: '#e2e8f0' } },
+      scales: { y: { beginAtZero: true, ticks: { color: '#94a3b8', stepSize: 1 } }, x: { ticks: { color: '#94a3b8' } } },
+    },
+  });
+
+  // ── first blood table ──────────────────────────────────
+  const fbBody = document.querySelector('#firstBloodTable tbody');
+  stats.filter(c => c.first_blood).forEach(c => {
+    const tr = document.createElement('tr');
+    const d = new Date(c.first_blood.date);
+    tr.innerHTML = `<td>${c.name}</td><td>${c.first_blood.team}</td><td>${d.toLocaleTimeString()}</td>`;
+    fbBody.appendChild(tr);
+  });
+}
+
+// chart.js time adapter
+const timeAdapterScript = document.createElement('script');
+timeAdapterScript.src = 'https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js';
+timeAdapterScript.onload = loadScoreboard;
+document.head.appendChild(timeAdapterScript);
+</script>
+{% endblock %}

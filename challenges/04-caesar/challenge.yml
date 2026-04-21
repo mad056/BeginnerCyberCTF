@@ -1,0 +1,16 @@
+name: "Scrambled"
+category: "Crypto"
+description: |
+  This message was scrambled before it was sent. Can you decode it?
+
+  `kqfl{hfjxfw_hnumjw_hwfhpji}`
+value: 100
+type: standard
+state: visible
+flags:
+  - flag{caesar_cipher_cracked}
+hints:
+  - content: "This is a substitution cipher where every letter is shifted by the same amount. Try CyberChef and look for a ROT / shift cipher."
+    cost: 50
+  - content: "The shift amount is 5. Try https://rot13.com or CyberChef with ROT13 set to amount 5."
+    cost: 50

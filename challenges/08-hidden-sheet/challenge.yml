@@ -1,0 +1,16 @@
+name: "The Books"
+category: "Forensics"
+description: |
+  Our finance team shared this budget file with us. Something seems off — there's more here than meets the eye.
+
+  Download the file and have a good look around.
+value: 125
+type: standard
+state: visible
+flags:
+  - flag{always_check_hidden_sheets}
+hints:
+  - content: "Spreadsheets can have more than one sheet. Check if any are out of sight."
+    cost: 62
+files:
+  - assets/budget.xlsx

@@ -1,0 +1,15 @@
+name: "Something Was Left On"
+category: "Web"
+description: |
+  Every browser ships with a powerful set of built-in tools that developers use to debug their sites.
+  Something was left behind on this page.
+
+  <a href="/challenges/02/index.html" target="_blank">Open Challenge Page</a>
+value: 75
+type: standard
+state: visible
+flags:
+  - flag{check_the_console}
+hints:
+  - content: "Every browser has built-in developer tools. Try pressing F12 and look at the Console tab."
+    cost: 37

@@ -1,0 +1,15 @@
+name: "Off Limits"
+category: "Web"
+description: |
+  Every public website has a standard file that tells search engines which pages to skip.
+  Whoever built this site forgot that listing something there makes it more interesting, not less.
+
+  The challenge lives at **/challenges/06/**. Start digging.
+value: 100
+type: standard
+state: visible
+flags:
+  - flag{robots_txt_reveals_secrets}
+hints:
+  - content: "Search for 'what is robots.txt' and how to find one on any website. Then look for what it's hiding."
+    cost: 50

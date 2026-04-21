@@ -1,0 +1,14 @@
+name: "Mirror Code"
+category: "Crypto"
+description: |
+  A classic scramble. Can you decode this message?
+
+  `synt{ebg13_vf_vgf_bja_varefr}`
+value: 75
+type: standard
+state: visible
+flags:
+  - flag{rot13_is_its_own_inverse}
+hints:
+  - content: "This is a very common cipher used all over the internet. Try searching for 'text decoder' or visit https://rot13.com"
+    cost: 37

@@ -1,0 +1,52 @@
+services:
+  ctfd:
+    image: ctfd/ctfd:3.8.4
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ctfd-logs:/var/log/CTFd
+      - ctfd-uploads:/var/uploads
+      - ../theme/ctf-theme:/opt/CTFd/CTFd/themes/ctf-theme:ro
+      - ../plugins/classroom_onboarding:/opt/CTFd/CTFd/plugins/classroom_onboarding:ro
+      - ../plugins/classroom_dashboard:/opt/CTFd/CTFd/plugins/classroom_dashboard:ro
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+
+  db:
+    image: mariadb:10.11
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-ctfd}
+      MYSQL_DATABASE: ctfd
+      MYSQL_USER: ctfd
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-ctfd}
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  cache:
+    image: redis:7-alpine
+    restart: always
+    volumes:
+      - cache-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db-data:
+  ctfd-logs:
+  ctfd-uploads:
+  cache-data:

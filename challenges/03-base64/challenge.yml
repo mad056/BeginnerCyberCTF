@@ -1,0 +1,14 @@
+name: "Garbled Message"
+category: "Crypto"
+description: |
+  We intercepted this strange-looking string. Can you make sense of it?
+
+  `ZmxhZ3tiYXNlNjRfaXNfbm90X2VuY3J5cHRpb259`
+value: 75
+type: standard
+state: visible
+flags:
+  - flag{base64_is_not_encryption}
+hints:
+  - content: "Try CyberChef (https://gchq.github.io/CyberChef/) — it has tools for decoding many common formats."
+    cost: 37

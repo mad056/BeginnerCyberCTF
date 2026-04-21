@@ -1,0 +1,16 @@
+name: "More Than Meets the Eye"
+category: "Forensics"
+description: |
+  This photo was found on a suspect's device. There's something hidden inside it.
+
+  Download the image and take a closer look.
+value: 100
+type: standard
+state: visible
+flags:
+  - flag{metadata_tells_the_truth}
+hints:
+  - content: "Look in the 'Comment' or 'User Comment' EXIF field."
+    cost: 50
+files:
+  - assets/photo.jpg

@@ -1,0 +1,2 @@
+User-agent: *
+Disallow: /static/plugins/classroom_onboarding/challenges/06/secret.html

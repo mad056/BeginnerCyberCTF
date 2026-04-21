@@ -1,0 +1,15 @@
+name: "Page Secrets"
+category: "Web"
+description: |
+  Every website is built from code your browser can see.
+  Visit the challenge page below and find the flag hidden in the page source.
+
+  <a href="/challenges/01/index.html" target="_blank">Open Challenge Page</a>
+value: 50
+type: standard
+state: visible
+flags:
+  - flag{view_source_is_easy}
+hints:
+  - content: "Look for an HTML comment. Comments start with <!-- and end with -->"
+    cost: 25

@@ -1,0 +1,21 @@
+MIME-Version: 1.0
+From: "IT Support" <support@totally-legit-company.com>
+To: student@university.edu
+Subject: URGENT: Your account will be suspended!
+Date: Mon, 13 Apr 2026 09:15:00 +0000
+X-Mailer: FakeMailer 1.0
+X-Flag: flag{check_email_headers_always}
+Content-Type: text/html; charset="UTF-8"
+
+<html>
+<body style="font-family:Arial,sans-serif;">
+<h2 style="color:red;">⚠️ URGENT: Account Suspension Notice</h2>
+<p>Dear Student,</p>
+<p>We have detected unusual activity on your account. Your access will be
+<strong>permanently suspended</strong> within 24 hours unless you verify your identity.</p>
+<p><a href="http://totally-not-a-scam.example.com/verify?id=12345" style="background:#d32f2f;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;">
+VERIFY NOW</a></p>
+<p style="font-size:0.8em;color:#999;">If you did not request this, please ignore this email.
+IT Support Team — totally-legit-company.com</p>
+</body>
+</html>
