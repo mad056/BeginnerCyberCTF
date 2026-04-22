@@ -17,7 +17,7 @@ if [ ! -f .env ]; then
   # Generate a random secret key
   SECRET=$(openssl rand -hex 32)
   sed -i "s/change-me-to-a-random-string/$SECRET/" .env
-  echo "  ✏️  Edit .env to set EVENT_PASSWORD and TEAM_NAMES"
+  echo "  ✏️  Review .env settings before first run"
   echo "     nano $INSTALL_DIR/infra/.env"
 fi
 
@@ -31,7 +31,9 @@ echo "Next steps:"
 echo "  1. Open the URL above and complete the CTFd admin setup wizard"
 echo "  2. Once you have your admin token (Admin → Settings → API Tokens), run:"
 echo "       cd $INSTALL_DIR"
-echo "       python3 scripts/import_challenges.py"
-echo "  3. To update descriptions/hints later:"
-echo "       python3 scripts/push_updates.py"
-echo "  4. Set the theme in Admin → Config → Theme → select 'ctf-theme'"
+echo "       python3 scripts/generate_assets.py"
+echo "       python3 scripts/import_challenges.py http://localhost:8000 YOUR_ADMIN_ACCESS_TOKEN"
+echo "  3. If any challenge attachment under /files/... returns 404, run:"
+echo "       python3 scripts/import_challenges.py http://localhost:8000 YOUR_ADMIN_ACCESS_TOKEN --update-existing --sync-files"
+echo "  4. Configure account registration policy in Admin → Config → Accounts"
+echo "  5. Enable Team Mode in Admin → Config → Settings"

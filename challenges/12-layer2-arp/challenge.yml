@@ -1,0 +1,21 @@
+name: "Layer 2 Intruder"
+category: "Forensics"
+description: |
+  Your SOC captured suspicious local network traffic during a possible Layer 2 attack.
+
+  Download the packet capture file and investigate the ARP activity.
+  Identify the MAC address of the attacker machine performing the attack.
+
+  Submit the attacker MAC address exactly as your flag.
+value: 200
+type: standard
+state: visible
+flags:
+  - 08:00:27:2d:f8:5a
+hints:
+  - content: "ARP (Address Resolution Protocol) maps IP addresses to MAC addresses on a local network segment."
+    cost: 50
+  - content: "Find the host that is repeatedly sending unsolicited ARP replies. That sender is the attacker."
+    cost: 50
+files:
+  - assets/layer2.pcap

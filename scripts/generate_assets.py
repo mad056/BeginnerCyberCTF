@@ -73,16 +73,22 @@ def make_xlsx():
 
 
 def make_qr():
-    """Create a QR code pointing to the fake company page."""
+    """Create a QR code decoy and place it where challenge routes can serve it."""
     import qrcode
 
-    path = os.path.join(CHALLENGES, "10-qr-osint", "assets", "qr.png")
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    assets_path = os.path.join(CHALLENGES, "10-qr-osint", "assets", "qr.png")
+    static_path = os.path.join(
+        BASE, "..", "plugins", "challenge_routes", "static", "challenges", "10", "qr.png"
+    )
+    os.makedirs(os.path.dirname(assets_path), exist_ok=True)
+    os.makedirs(os.path.dirname(static_path), exist_ok=True)
 
-    url = "/plugins/classroom_onboarding/static/challenges/10/company.html"
+    url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     qr = qrcode.make(url)
-    qr.save(path)
-    print(f"  ✓ {path}")
+    qr.save(assets_path)
+    qr.save(static_path)
+    print(f"  ✓ {assets_path}")
+    print(f"  ✓ {static_path}")
 
 
 if __name__ == "__main__":

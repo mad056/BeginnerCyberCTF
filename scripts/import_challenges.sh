@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Import all challenges into CTFd using ctfcli.
+# Alternative workflow: prefer scripts/import_challenges.py for deterministic update + file repair.
 # Usage: ./import_challenges.sh https://your-ctfd-url ADMIN_TOKEN
 set -euo pipefail
 

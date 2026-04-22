@@ -35,21 +35,24 @@ bash setup.sh
 ### 4. Configure
 ```bash
 nano ~/ctf/infra/.env
-# Set EVENT_PASSWORD, TEAM_NAMES, then restart:
+# Set SECRET_KEY and database passwords if needed, then restart:
 cd ~/ctf/infra && docker compose restart
 ```
 
 ### 5. Admin setup
 1. Open `http://YOUR_DROPLET_IP:8000` in your browser
 2. Complete the CTFd setup wizard (set admin user/pass)
-3. Go to **Admin → Config → Theme** → set to `ctf-theme`
-4. Go to **Admin → Config → Accounts** → disable public registration
-5. Go to **Admin → Config → Settings** → set Team Mode
+3. Go to **Admin → Config → Accounts** and set your registration policy
+4. Go to **Admin → Config → Settings** → set Team Mode
 
 ### 6. Import challenges
 ```bash
-cd ~/ctf/scripts
-bash import_challenges.sh http://localhost:8000 YOUR_ADMIN_ACCESS_TOKEN
+cd ~/ctf
+python3 scripts/generate_assets.py
+python3 scripts/import_challenges.py http://localhost:8000 YOUR_ADMIN_ACCESS_TOKEN
+
+# If challenge attachments under /files/... return 404, repair and resync:
+python3 scripts/import_challenges.py http://localhost:8000 YOUR_ADMIN_ACCESS_TOKEN --update-existing --sync-files
 ```
 
 ### 7. (Optional) Add HTTPS with Caddy

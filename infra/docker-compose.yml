@@ -9,9 +9,7 @@ services:
     volumes:
       - ctfd-logs:/var/log/CTFd
       - ctfd-uploads:/var/uploads
-      - ../theme/ctf-theme:/opt/CTFd/CTFd/themes/ctf-theme:ro
-      - ../plugins/classroom_onboarding:/opt/CTFd/CTFd/plugins/classroom_onboarding:ro
-      - ../plugins/classroom_dashboard:/opt/CTFd/CTFd/plugins/classroom_dashboard:ro
+      - ../plugins/challenge_routes:/opt/CTFd/CTFd/plugins/challenge_routes:ro
     depends_on:
       db:
         condition: service_healthy
